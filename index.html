@@ -689,6 +689,22 @@ if(!IN_CLAUDE){
   };
 }
 
+/* ---------- atualização automática (GitHub Pages) ---------- */
+const APP_VERSION='4';
+async function checkUpdate(){
+  if(IN_CLAUDE||location.protocol==='file:')return;
+  try{
+    const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;
+    const v=String((await r.json()).version||'');
+    if(v&&v!==APP_VERSION){
+      const u=new URL(location.href);if(u.searchParams.get('v')===v)return; // evita loop
+      u.searchParams.set('v',v);location.replace(u.toString());
+    }
+  }catch(e){}
+}
+checkUpdate();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkUpdate()});
+
 /* ---------- início ---------- */
 loadLocal();renderAll();setStatus();
 (async()=>{
