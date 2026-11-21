@@ -377,7 +377,8 @@ const PROFILES={daniel:{nome:'Daniel',pfx:'',tip:'Quando fizer todas as séries 
                 helo:{nome:'Helo',pfx:'helo_',tip:'Para emagrecer e definir: faça 20–30 min de caminhada inclinada ou bike depois do treino. Quando fizer todas as séries no topo da faixa, aumente um pouco o peso.'}};
 const DEFAULT_PLANS={
  daniel:{A:[["legpress","3x10–12"],["supino_halter","3x8–12"],["puxada","3x10–12"],["desenvolvimento","3x10–12"],["afundo","3x10 cada perna"],["prancha","3x30s"]],
-         B:[["goblet","3x10–12"],["remada","3x10–12"],["supino_inclinado","3x10–12"],["stiff","3x10–12"],["facepull","3x12–15"],["rosca","2x12"],["triceps","2x12"]]},
+         B:[["goblet","3x10–12"],["remada","3x10–12"],["supino_inclinado","3x10–12"],["stiff","3x10–12"],["facepull","3x12–15"],["rosca","2x12"],["triceps","2x12"]],
+         C:[["agachamento_smith","3x10–12"],["supino_reto_barra","3x8–10"],["serrote","3x10 cada lado"],["elevacao_lateral","3x12–15"],["cadeira_extensora","3x12"],["rosca_martelo","2x12"],["abdominal_infra","3x12"]]},
  helo:{A:[["goblet","3x12"],["elevacao_pelvica","4x10–12"],["legpress","3x12–15"],["afundo","3x10 cada perna"],["abdutora","3x15"],["prancha","3x30s"]],
        B:[["puxada","3x10–12"],["supino_inclinado","3x10–12"],["remada","3x10–12"],["desenvolvimento","3x10–12"],["triceps","2x12"],["rosca","2x12"]],
        C:[["elevacao_pelvica","4x10–12"],["stiff","3x10–12"],["sumo","3x12"],["cadeira_flexora","3x12"],["gluteo_cabo","3x12 cada perna"],["prancha","3x30s"]]}
@@ -409,7 +410,7 @@ const LS='meu-treino-v2';
 
 const K=d=>PROFILES[prof].pfx+d;
 const S=d=>sessions[K(d)];
-const planOf=()=>plans[prof]||DEFAULT_PLANS[prof];
+const planOf=()=>plans[prof]?{...DEFAULT_PLANS[prof],...plans[prof]}:DEFAULT_PLANS[prof];
 const letters=()=>Object.keys(planOf());
 function myDates(){const p=PROFILES[prof].pfx;return Object.keys(sessions).filter(k=>SESS_RE.test(k)&&(p?k.startsWith(p):!k.startsWith('helo_'))).map(k=>k.slice(p.length))}
 
